@@ -9,7 +9,8 @@ on:
       - main
   workflow_dispatch:
 
-env: TF_VAR_aws_account_id = ${{ secrets.AWS_ACCOUNT_ID }}
+env:
+  TF_VAR_aws_account_id: ${{ secrets.AWS_ACCOUNT_ID }}
 
 permissions:
   pull-requests: write
@@ -122,8 +123,6 @@ jobs:
       - name: Terraform Plan
         id: plan
         run: terraform plan
-
-
 
   tf-apply:
     name: Terraform Apply
