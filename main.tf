@@ -37,6 +37,9 @@ resource "aws_eks_node_group" "fiap_burger_eks_node_group" {
   node_group_name = "${var.aws_cluster_name}-nodegroup"
   node_role_arn   = "arn:aws:iam::${var.aws_account_id}:role/LabRole"
   instance_types  = ["t3.small"]
+  disk_size       = 20
+  ami_type        = "AL2023_x86_64_STANDARD"
+  capacity_type   = "ON_DEMAND"
 
   subnet_ids = [
     aws_subnet.fiap_burger_subnet_1a.id,
@@ -48,6 +51,10 @@ resource "aws_eks_node_group" "fiap_burger_eks_node_group" {
     desired_size = 1
     max_size     = 2
     min_size     = 1
+  }
+
+  tags = {
+    Name = "${var.aws_cluster_name}-nodegroup"
   }
 
   depends_on = [
