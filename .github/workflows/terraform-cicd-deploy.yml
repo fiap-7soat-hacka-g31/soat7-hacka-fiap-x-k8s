@@ -11,6 +11,7 @@ on:
 
 jobs:
   tf-summary:
+    if: github.event_name == 'pull_request'
     name: Terraform Summary
     runs-on: ubuntu-latest
     steps:
