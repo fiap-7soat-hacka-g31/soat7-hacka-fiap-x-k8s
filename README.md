@@ -1,5 +1,9 @@
 # Fiap Burger K8S Terraform
+
 ```bash
+# import environment variables (from .env)
+export $(grep -v '^#' .env | xargs)
+
 # validate
 terraform fmt --check
 terraform validate
