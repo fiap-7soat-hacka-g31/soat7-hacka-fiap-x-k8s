@@ -1,0 +1,27 @@
+name: Terraform IAC - Kubernetes Cluster
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  tf-summary:
+    name: Terraform Summary
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hello World
+        run: echo "Something me doing?"
+
+  tf-plan:
+    name: Terraform Plan
+    runs-on: ubuntu-latest
+    environment:
+      name: build
+    steps:
+      - name: Hello World
+        run: echo "Something me doing?"
