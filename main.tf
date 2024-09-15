@@ -19,9 +19,10 @@ resource "aws_eks_cluster" "fiap_burger_eks" {
   vpc_config {
 
     subnet_ids = [
-      aws_subnet.fiap_burger_subnet_1a.id,
-      aws_subnet.fiap_burger_subnet_1b.id,
-      aws_subnet.fiap_burger_subnet_1c.id,
+      aws_subnet.fiap_burger_pub_subnet_1a.id,
+      aws_subnet.fiap_burger_pub_subnet_1b.id,
+      aws_subnet.fiap_burger_priv_subnet_1a.id,
+      aws_subnet.fiap_burger_priv_subnet_1b.id,
     ]
 
     public_access_cidrs     = ["0.0.0.0/0"]
@@ -42,9 +43,8 @@ resource "aws_eks_node_group" "fiap_burger_eks_node_group" {
   capacity_type   = "ON_DEMAND"
 
   subnet_ids = [
-    aws_subnet.fiap_burger_subnet_1a.id,
-    aws_subnet.fiap_burger_subnet_1b.id,
-    aws_subnet.fiap_burger_subnet_1c.id,
+    aws_subnet.fiap_burger_priv_subnet_1a.id,
+    aws_subnet.fiap_burger_priv_subnet_1b.id,
   ]
 
   scaling_config {
