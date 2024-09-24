@@ -83,3 +83,15 @@ resource "aws_eks_addon" "coredns" {
     aws_eks_node_group.fiap_burger_eks_node_group,
   ]
 }
+
+output "fiap_burger_vpc_id" {
+  value = aws_vpc.fiap_burger_vpc.id
+}
+
+output "fiap_burger_priv_subnet_1a_id" {
+  value = aws_subnet.fiap_burger_priv_subnet_1a.id
+}
+
+output "fiap_burger_priv_subnet_1b_id" {
+  value = aws_subnet.fiap_burger_priv_subnet_1b.id
+}
