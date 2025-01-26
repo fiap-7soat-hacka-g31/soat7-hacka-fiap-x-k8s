@@ -9,6 +9,6 @@ variable "aws_account_id" {
 }
 
 variable "aws_cluster_name" {
-  default     = "fiap-burger-k8s"
+  default     = "fiap-x-k8s"
   description = "The name of the EKS Cluster to Create"
 }
