@@ -2,7 +2,7 @@ provider "aws" {
   region = var.region
 }
 
-resource "aws_eks_cluster" "fiap_burger_eks" {
+resource "aws_eks_cluster" "fiap_x_eks" {
   name     = var.aws_cluster_name
   role_arn = "arn:aws:iam::${var.aws_account_id}:role/LabRole"
 
@@ -19,10 +19,10 @@ resource "aws_eks_cluster" "fiap_burger_eks" {
   vpc_config {
 
     subnet_ids = [
-      aws_subnet.fiap_burger_pub_subnet_1a.id,
-      aws_subnet.fiap_burger_pub_subnet_1b.id,
-      aws_subnet.fiap_burger_priv_subnet_1a.id,
-      aws_subnet.fiap_burger_priv_subnet_1b.id,
+      aws_subnet.fiap_x_pub_subnet_1a.id,
+      aws_subnet.fiap_x_pub_subnet_1b.id,
+      aws_subnet.fiap_x_priv_subnet_1a.id,
+      aws_subnet.fiap_x_priv_subnet_1b.id,
     ]
 
     public_access_cidrs     = ["0.0.0.0/0"]
@@ -33,7 +33,7 @@ resource "aws_eks_cluster" "fiap_burger_eks" {
   enabled_cluster_log_types = []
 }
 
-resource "aws_eks_node_group" "fiap_burger_eks_node_group" {
+resource "aws_eks_node_group" "fiap_x_eks_node_group" {
   cluster_name    = var.aws_cluster_name
   node_group_name = "${var.aws_cluster_name}-nodegroup"
   node_role_arn   = "arn:aws:iam::${var.aws_account_id}:role/LabRole"
@@ -43,8 +43,8 @@ resource "aws_eks_node_group" "fiap_burger_eks_node_group" {
   capacity_type   = "ON_DEMAND"
 
   subnet_ids = [
-    aws_subnet.fiap_burger_priv_subnet_1a.id,
-    aws_subnet.fiap_burger_priv_subnet_1b.id,
+    aws_subnet.fiap_x_priv_subnet_1a.id,
+    aws_subnet.fiap_x_priv_subnet_1b.id,
   ]
 
   scaling_config {
@@ -58,40 +58,40 @@ resource "aws_eks_node_group" "fiap_burger_eks_node_group" {
   }
 
   depends_on = [
-    aws_eks_cluster.fiap_burger_eks
+    aws_eks_cluster.fiap_x_eks
   ]
 }
 
 resource "aws_eks_addon" "kubeproxy" {
-  cluster_name                = aws_eks_cluster.fiap_burger_eks.name
+  cluster_name                = aws_eks_cluster.fiap_x_eks.name
   addon_name                  = "kube-proxy"
   addon_version               = "v1.30.0-eksbuild.3"
   resolve_conflicts_on_update = "PRESERVE"
   depends_on = [
-    aws_eks_cluster.fiap_burger_eks,
-    aws_eks_node_group.fiap_burger_eks_node_group,
+    aws_eks_cluster.fiap_x_eks,
+    aws_eks_node_group.fiap_x_eks_node_group,
   ]
 }
 
 resource "aws_eks_addon" "coredns" {
-  cluster_name                = aws_eks_cluster.fiap_burger_eks.name
+  cluster_name                = aws_eks_cluster.fiap_x_eks.name
   addon_name                  = "coredns"
   addon_version               = "v1.11.1-eksbuild.8"
   resolve_conflicts_on_update = "PRESERVE"
   depends_on = [
-    aws_eks_cluster.fiap_burger_eks,
-    aws_eks_node_group.fiap_burger_eks_node_group,
+    aws_eks_cluster.fiap_x_eks,
+    aws_eks_node_group.fiap_x_eks_node_group,
   ]
 }
 
-output "fiap_burger_vpc_id" {
-  value = aws_vpc.fiap_burger_vpc.id
+output "fiap_x_vpc_id" {
+  value = aws_vpc.fiap_x_vpc.id
 }
 
-output "fiap_burger_priv_subnet_1a_id" {
-  value = aws_subnet.fiap_burger_priv_subnet_1a.id
+output "fiap_x_priv_subnet_1a_id" {
+  value = aws_subnet.fiap_x_priv_subnet_1a.id
 }
 
-output "fiap_burger_priv_subnet_1b_id" {
-  value = aws_subnet.fiap_burger_priv_subnet_1b.id
+output "fiap_x_priv_subnet_1b_id" {
+  value = aws_subnet.fiap_x_priv_subnet_1b.id
 }
